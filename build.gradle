@@ -1,0 +1,13 @@
+// 顶层构建脚本（工程级配置，不写具体模块的构建逻辑）
+//
+// 这里只声明 Android Gradle Plugin（AGP）的版本，不在顶层应用它，
+// 由各模块（app/build.gradle）自行 apply。
+//
+// ⚠️ 升级注意：AGP 版本与 Gradle 版本必须匹配，二者不匹配会直接构建失败。
+//    对照表见 https://developer.android.com/build/releases/gradle-plugin
+//      例：AGP 8.2.2 ↔ Gradle 8.2（当前配置）
+//    升级 AGP 时，务必同步修改
+//      gradle/wrapper/gradle-wrapper.properties 中的 distributionUrl
+plugins {
+    id 'com.android.application' version '8.2.2' apply false
+}

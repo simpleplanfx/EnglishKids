@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>英语小超人 · 听说读写</title>
+<meta name="description" content="上海小学英语（沪教版/牛津上海版）听·跟读·默写练习">
+<meta name="theme-color" content="#4F7CFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="英语小超人">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div id="app">
+  <!-- ============ 首页：选教材 ============ -->
+  <section class="screen" id="scr-home">
+    <header class="topbar">
+      <div class="topbar-l">
+        <div class="brand">英语小超人</div>
+        <div class="brand-sub" id="homeSub">上海沪教版 · 小学</div>
+      </div>
+      <div class="starbox"><span class="star-ico">★</span><span id="starTotal">0</span></div>
+    </header>
+    <div class="scroll" id="bookList">
+      <div class="loading">正在装载词库…</div>
+    </div>
+  </section>
+
+  <!-- ============ 单元选择 ============ -->
+  <section class="screen hidden" id="scr-units">
+    <header class="topbar">
+      <button class="backbtn" data-back>‹ 返回</button>
+      <div class="topbar-title" id="unitBookTitle">单元</div>
+      <button class="textbtn" id="unitSelectAll">全选</button>
+    </header>
+    <div class="scroll">
+      <div class="unitlist" id="unitList"></div>
+      <div class="pad"></div>
+    </div>
+    <div class="modebar">
+      <div class="modebar-hint" id="unitHint">已选 0 个单元 · 0 词</div>
+      <div class="modegrid">
+        <button class="modebtn c-blue" data-mode="learn"><span class="mi">📖</span>认词</button>
+        <button class="modebtn c-green" data-mode="listen"><span class="mi">🎧</span>听力</button>
+        <button class="modebtn c-orange" data-mode="speak"><span class="mi">🎤</span>跟读</button>
+        <button class="modebtn c-purple" data-mode="write"><span class="mi">✏️</span>默写</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 认词 ============ -->
+  <section class="screen hidden" id="scr-learn">
+    <header class="topbar">
+      <button class="backbtn" data-back>‹ 退出</button>
+      <div class="progwrap"><div class="progbar"><i id="learnProg"></i></div></div>
+      <div class="topbar-title small" id="learnCount">0/0</div>
+    </header>
+    <div class="cardstage">
+      <div class="flashcard" id="learnCard">
+        <div class="fc-word" id="learnWord">—</div>
+        <div class="fc-ph" id="learnPh"></div>
+        <div class="fc-zh hidden" id="learnZh"></div>
+        <div class="fc-full" id="learnFull"></div>
+      </div>
+    </div>
+    <div class="actionbar">
+      <button class="bigbtn ghost" id="learnSpeak"><span class="bi">🔊</span>朗读</button>
+      <button class="bigbtn danger" id="learnNo"><span class="bi">✗</span>不认识</button>
+      <button class="bigbtn success" id="learnYes"><span class="bi">✓</span>认识</button>
+    </div>
+  </section>
+
+  <!-- ============ 听力 ============ -->
+  <section class="screen hidden" id="scr-listen">
+    <header class="topbar">
+      <button class="backbtn" data-back>‹ 退出</button>
+      <div class="progwrap"><div class="progbar"><i id="listenProg"></i></div></div>
+      <div class="topbar-title small" id="listenCount">0/0</div>
+    </header>
+    <div class="quizstage">
+      <button class="soundbig" id="listenPlay"><span>🔊</span><em>点击听单词</em></button>
+      <div class="opts" id="listenOpts"></div>
+      <div class="feedback hidden" id="listenFb"></div>
+    </div>
+  </section>
+
+  <!-- ============ 跟读 ============ -->
+  <section class="screen hidden" id="scr-speak">
+    <header class="topbar">
+      <button class="backbtn" data-back>‹ 退出</button>
+      <div class="progwrap"><div class="progbar"><i id="speakProg"></i></div></div>
+      <div class="topbar-title small" id="speakCount">0/0</div>
+    </header>
+    <div class="quizstage">
+      <div class="spk-word" id="spkWord">—</div>
+      <div class="spk-ph" id="spkPh"></div>
+      <div class="spk-zh" id="spkZh"></div>
+      <div class="spk-wave hidden" id="spkWave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="spk-score hidden" id="spkScore"></div>
+      <div class="spk-actions">
+        <button class="roundbtn blue" id="spkPlay"><span>🔊</span><em>听</em></button>
+        <button class="roundbtn orange big" id="spkRec"><span>🎤</span><em id="spkRecTxt">跟读</em></button>
+        <button class="roundbtn gray" id="spkReplay"><span>▶️</span><em>回放</em></button>
+      </div>
+      <div class="spk-tip" id="spkTip">先听一遍，再点麦克风跟读</div>
+      <button class="nextbtn hidden" id="spkNext">下一个 ›</button>
+    </div>
+  </section>
+
+  <!-- ============ 默写 ============ -->
+  <section class="screen hidden" id="scr-write">
+    <header class="topbar">
+      <button class="backbtn" data-back>‹ 退出</button>
+      <div class="progwrap"><div class="progbar"><i id="writeProg"></i></div></div>
+      <div class="topbar-title small" id="writeCount">0/0</div>
+    </header>
+    <div class="quizstage">
+      <div class="write-prompt">
+        <button class="soundmid" id="writePlay"><span>🔊</span></button>
+        <div class="wp-zh" id="writeZh">—</div>
+        <div class="wp-hint" id="writeHint">听读音，拼出单词</div>
+      </div>
+      <div class="slots" id="writeSlots"></div>
+      <input class="write-input" id="writeInput" type="text" autocomplete="off"
+             autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="拼写输入">
+      <div class="feedback hidden" id="writeFb"></div>
+      <div class="write-actions">
+        <button class="midbtn ghost" id="writeTipBtn">提示</button>
+        <button class="midbtn ghost" id="writeSkip">不会</button>
+        <button class="midbtn primary" id="writeOk">确定</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 结果 ============ -->
+  <section class="screen hidden" id="scr-result">
+    <div class="resultwrap">
+      <div class="result-emoji" id="resEmoji">🎉</div>
+      <div class="result-title" id="resTitle">完成啦！</div>
+      <div class="result-stars" id="resStars"></div>
+      <div class="result-stats">
+        <div class="rs-item"><b id="resRight">0</b><span>答对</span></div>
+        <div class="rs-item"><b id="resWrongN">0</b><span>答错</span></div>
+        <div class="rs-item"><b id="resAcc">0%</b><span>正确率</span></div>
+        <div class="rs-item"><b id="resTime">0s</b><span>用时</span></div>
+      </div>
+      <div class="wrongpreview" id="resWrongList"></div>
+      <div class="result-btns">
+        <button class="bigbtn primary" id="resAgain">再来一轮</button>
+        <button class="bigbtn ghost" id="resReview">只练错词</button>
+        <button class="bigbtn ghost" id="resHome">回书架</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 错词本 ============ -->
+  <section class="screen hidden" id="scr-wrong">
+    <header class="topbar">
+      <div class="topbar-title">错词本</div>
+      <button class="textbtn" id="wrongClear">清空</button>
+    </header>
+    <div class="scroll"><div id="wrongList" class="wordlist"></div><div class="pad"></div></div>
+    <div class="modebar" id="wrongBar">
+      <div class="modegrid one">
+        <button class="modebtn c-purple" id="wrongDrill"><span class="mi">✏️</span>开始攻克</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 我的 / 家长 ============ -->
+  <section class="screen hidden" id="scr-me">
+    <header class="topbar"><div class="topbar-title">我的</div></header>
+    <div class="scroll">
+      <div class="statgrid" id="statGrid"></div>
+
+      <div class="panel">
+        <div class="panel-h">学习设置</div>
+        <div class="setrow">
+          <label>每轮词数</label>
+          <div class="seg" id="setCount">
+            <button data-v="5">5</button><button data-v="10">10</button>
+            <button data-v="15">15</button><button data-v="20">20</button>
+          </div>
+        </div>
+        <div class="setrow">
+          <label>口音</label>
+          <div class="seg" id="setAccent">
+            <button data-v="uk">英式</button><button data-v="us">美式</button>
+          </div>
+        </div>
+        <div class="setrow">
+          <label>语速</label>
+          <div class="seg" id="setRate">
+            <button data-v="0.65">慢</button><button data-v="0.85">正常</button>
+            <button data-v="1">快</button>
+          </div>
+        </div>
+        <div class="setrow">
+          <label>发音来源</label>
+          <div class="seg" id="setVoice">
+            <button data-v="system">系统语音</button><button data-v="online">在线发音</button>
+          </div>
+        </div>
+        <div class="setrow">
+          <label>进入自动朗读</label>
+          <div class="seg" id="setAuto">
+            <button data-v="1">开</button><button data-v="0">关</button>
+          </div>
+        </div>
+        <div class="setrow">
+          <label>默写方式</label>
+          <div class="seg" id="setWriteMode">
+            <button data-v="audio">听音拼写</button><button data-v="zh">看中文拼写</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">词库导入 <span class="panel-hint">按单元补充课本词汇</span></div>
+        <div class="importbox">
+          <div class="setrow">
+            <label>导入到</label>
+            <select id="impBook" class="select"></select>
+          </div>
+          <div class="setrow">
+            <label>单元名</label>
+            <input id="impUnit" class="input" placeholder="如：Unit 3 My school">
+          </div>
+          <textarea id="impText" class="textarea" rows="6"
+            placeholder="每行一个单词，用逗号或制表符分隔：&#10;teacher,老师&#10;classmate 同班同学&#10;police officer,警察"></textarea>
+          <div class="impbtns">
+            <button class="midbtn primary" id="impGo">导入</button>
+            <button class="midbtn ghost" id="impClear">清空</button>
+          </div>
+          <div class="impmsg" id="impMsg"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h">关于</div>
+        <div class="about" id="aboutBox"></div>
+      </div>
+      <div class="pad"></div>
+    </div>
+  </section>
+
+  <!-- 底部导航 -->
+  <nav class="tabbar" id="tabbar">
+    <button class="tab active" data-go="home"><span>📚</span>书架</button>
+    <button class="tab" data-go="wrong"><span>🔖</span>错词<i class="badge hidden" id="wrongBadge">0</i></button>
+    <button class="tab" data-go="me"><span>⚙️</span>我的</button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="js/store.js"></script>
+<script src="js/speech.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

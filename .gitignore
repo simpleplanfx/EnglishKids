@@ -1,0 +1,66 @@
+# ============================================================
+# 英语小超人 (EnglishKids) — Git 忽略规则
+# 目标：仓库只存「源码 + 文档 + 数据」，任何机器相关 / 可再生的
+#      大文件都不入库，保证 clone 下来就能干净地重新编译。
+# ============================================================
+
+# ---------- 1. Gradle 构建系统 ----------
+# Gradle 本地缓存与守护进程状态（可再生，且体积大）
+.gradle/
+# 所有模块的编译输出目录
+build/
+# APK、R 文件、中间产物等（用 gradlew 可重新生成）
+app/build/
+# 但 wrapper 的 jar 必须保留，否则别人无法编译
+!gradle/wrapper/gradle-wrapper.jar
+
+# ---------- 2. 本机环境相关（含绝对路径，禁止入库）----------
+# 由构建脚本自动生成，内容是本机 SDK 绝对路径（如 D:\software\...）
+# 每人机器不同，入库会互相覆盖导致编译失败
+local.properties
+# Android Studio 模块配置
+*.iml
+# IDE 工作区配置
+.idea/
+# macOS 目录索引
+.DS_Store
+# Windows 缩略图缓存
+Thumbs.db
+
+# ---------- 3. 工具链（数 GB，绝对不能入库）----------
+# 说明：JDK 与 Android SDK 默认存放在仓库「上一级目录」的 jdk17/ 和
+#       android-sdk/ 中（见 scripts/build_apk.ps1 的 $ToolRoot）。
+#       它们本就在仓库外，此处仅为防止误移动进仓库时造成灾难性提交。
+jdk17/
+android-sdk/
+jdk17.zip
+cmdtools.zip
+*.zip
+
+# ---------- 4. 构建产物 ----------
+# 安装包（发布走 GitHub Release，不进 git 历史）
+*.apk
+# Android App Bundle
+*.aab
+*.ap_
+*.dex
+
+# ---------- 5. 签名与密钥（安全红线）----------
+*.jks
+*.keystore
+# 调试签名密钥可入库（公开、无安全风险）
+!debug.keystore
+*.pem
+*.p12
+*.key
+
+# ---------- 6. 日志与临时文件 ----------
+*.log
+_syntax_check.txt
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ---------- 7. 依赖缓存 ----------
+.kotlin/
+.navigation/

@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.englishkids'
+    compileSdk 34
+
+    defaultConfig {
+        // 应用唯一标识。发布后不要更改，否则手机会视为另一个应用，无法覆盖升级
+        applicationId 'com.example.englishkids'
+
+        // 最低支持 Android 7.0 (API 24)。
+        // 定在 24 是为了覆盖绝大多数在用设备，同时能使用较新的 WebView 能力。
+        // ⚠️ 下调 minSdk 前需确认 WebView 相关 API 的兼容性
+        minSdk 24
+
+        // 目标 SDK。跟随官方建议保持较新，以获得最新的行为与安全策略
+        targetSdk 34
+
+        // ⚠️ 发版必改：整数，每次发布必须 +1，系统据此判断是否需要升级。
+        //    与 versionName 无关，即使 versionName 不变也要递增
+        versionCode 1
+
+        // 展示给用户的版本字符串，遵循语义化版本（主.次.修订）
+        versionName '1.0'
+
+        // 关闭 AndroidX 严格检查（本项目不使用 AndroidX，纯 WebView）
+        vectorDrawables.useSupportLibrary = false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding false
+        compose false
+    }
+}
+
+dependencies {
+    // 无需任何第三方依赖，全部用系统 WebView
+}

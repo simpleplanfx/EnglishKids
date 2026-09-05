@@ -1,0 +1,18 @@
+# 统一换行符：仓库内一律以 LF 存储，检出时按各平台自动转换。
+# 避免 Windows / macOS / Linux 协作者互相把文件整篇改写成 CRLF/LF 造成的无意义 diff。
+* text=auto
+
+# Windows 批处理文件必须在 CRLF 下运行，单独锁定
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# PowerShell 脚本以 UTF-8（含 BOM）保存，锁定 LF 避免编码争议
+*.ps1 text eol=lf
+
+# 二进制资源，不对其做文本转换
+*.png binary
+*.jpg binary
+*.jks binary
+*.keystore binary
+*.docx binary
+*.zip binary

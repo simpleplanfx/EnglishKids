@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 无标题栏、全屏显示网页；适配 Android 5.0+ (minSdk 24) -->
+    <style name="Theme.EnglishKids.NoActionBar" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- 沉浸式状态栏（WebView 背景色由页面控制） -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
