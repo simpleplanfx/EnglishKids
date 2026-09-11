@@ -64,3 +64,10 @@ captures/
 # ---------- 7. 依赖缓存 ----------
 .kotlin/
 .navigation/
+
+# ---------- 8. 数据抓取中间产物（可再生，不入库）----------
+# 说明：这两个目录由 scripts/crawl_kkabc.py 从教材站点抓取生成，
+#      属于可再生中间产物，且体积约 13MB，不进 git 历史。
+#      需要时用 `python scripts/crawl_kkabc.py` 重新生成即可。
+data/kk/
+data/tmp/
