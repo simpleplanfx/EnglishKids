@@ -6,7 +6,8 @@ import html
 import urllib.request
 
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
-OUT = r'D:\software\workbuddy data\个人\english-kids\data\kk'
+# 仓库根：脚本位于 <repo>/scripts/，向上一级即仓库根
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'kk')
 BASE = 'https://fanyi.kkabc.com/list/'
 
 SEEDS = ['bk_5febb1', 'bk_2a255b', 'bk_e26c67']

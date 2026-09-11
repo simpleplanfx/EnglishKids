@@ -2,8 +2,10 @@
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-APP = r'D:\software\workbuddy data\个人\english-kids\app'
-OUT = os.path.join(APP, 'icons')
+# 仓库根：脚本位于 <repo>/scripts/，向上一级即仓库根。
+# 图标输出到 assets 目录（PWA manifest 与网页同目录）。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(BASE, 'app', 'src', 'main', 'assets', 'icons')
 os.makedirs(OUT, exist_ok=True)
 
 FONT_CANDIDATES = [

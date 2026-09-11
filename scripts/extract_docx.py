@@ -1,4 +1,5 @@
 """从三年级上册英语词汇分类整理.docx 提取词汇表（英文 | 中文）"""
+import os
 import zipfile
 import re
 import json
@@ -6,7 +7,10 @@ import xml.etree.ElementTree as ET
 
 W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 
-SRC = r'D:\onedrive\文档\xwechat_files\fangxuvip_660d\msg\file\2026-09\三年级上册英语词汇分类整理.docx'
+# 仓库根：脚本位于 <repo>/scripts/，向上一级即仓库根。
+# 源词表已随仓库归档，不再依赖微信 / OneDrive 的外部下载目录。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = os.path.join(BASE, 'source-data', '三年级上册英语词汇分类整理.docx')
 
 
 def para_text(p):

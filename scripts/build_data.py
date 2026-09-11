@@ -6,9 +6,12 @@ import html
 import zipfile
 import xml.etree.ElementTree as ET
 
-BASE = r'D:\software\workbuddy data\个人\english-kids'
+# 仓库根：脚本位于 <repo>/scripts/，向上一级即仓库根。
+# 不再硬编码本机绝对路径，换台机器 clone 下来即可直接运行。
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KK = os.path.join(BASE, 'data', 'kk')
-DOCX = r'D:\onedrive\文档\xwechat_files\fangxuvip_660d\msg\file\2026-09\三年级上册英语词汇分类整理.docx'
+# 源词表已随仓库归档在 source-data/，不再依赖微信 / OneDrive 的外部下载目录
+DOCX = os.path.join(BASE, 'source-data', '三年级上册英语词汇分类整理.docx')
 
 GRADE_CN = {'一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6}
 
@@ -223,7 +226,7 @@ def main():
         },
         'books': books,
     }
-    out = os.path.join(BASE, 'app', 'data', 'words.json')
+    out = os.path.join(BASE, 'app', 'src', 'main', 'assets', 'data', 'words.json')
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, separators=(',', ':'))

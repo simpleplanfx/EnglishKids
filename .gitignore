@@ -71,3 +71,8 @@ captures/
 #      需要时用 `python scripts/crawl_kkabc.py` 重新生成即可。
 data/kk/
 data/tmp/
+
+# ---------- 9. Python 工具链缓存 ----------
+# scripts/ 下的词库构建脚本会产生字节码缓存
+__pycache__/
+*.py[cod]
